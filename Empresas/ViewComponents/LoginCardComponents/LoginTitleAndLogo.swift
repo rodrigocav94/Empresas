@@ -12,7 +12,7 @@ struct LoginTitleAndLogo: View {
         ZStack(alignment: .bottom) {
             HStack {
                 Spacer()
-                LinearGradient(gradient: Gradient(colors: [Color("Coral"), .clear]), startPoint: .top, endPoint: .bottom)
+                LinearGradient(gradient: Gradient(colors: [.coral, .clear]), startPoint: .top, endPoint: .bottom)
                     .mask(
                         Image("backgroundLogo")
                             .resizable()

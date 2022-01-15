@@ -16,8 +16,8 @@ struct EmailAndPasswordCard: View {
             Group {
                 Text("Digite seus dados para continuar.")
                     .bold()
-                LoginTextField(title: "Email", text: $emailAndPassworViewwModel.email)
-                LoginTextField(title: "Senha", text: $emailAndPassworViewwModel.password, canBeHidden: true)
+                StylizedTextField(title: "Email", text: $emailAndPassworViewwModel.email)
+                StylizedTextField(title: "Senha", text: $emailAndPassworViewwModel.password, type: .password)
             }
             .foregroundColor(.black)
             LoginButton(disableCondition: emailAndPassworViewwModel.loginButtonDisableCondition, action: { sessionDetails.currentScreen = .home})

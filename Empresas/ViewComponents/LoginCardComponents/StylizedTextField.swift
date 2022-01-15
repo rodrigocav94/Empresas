@@ -8,22 +8,28 @@
 import SwiftUI
 import Combine
 
-struct LoginTextField: View {
+struct StylizedTextField: View {
     var title: String
     @Binding var text: String
-    var canBeHidden = false
+    var type: textFieldType = .normal
     @State private var isHiding = true
     @State private var isEditing = false
     
     var body: some View {
         VStack(alignment: .leading) {
-            if !self.text.isEmpty {
+            if !self.text.isEmpty && type != .search {
                 Text(title)
                     .font(.footnote)
             }
             HStack {
+                if type == .search {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(.secondary)
+                        .frame(width: text.isEmpty ? 10 : 0)
+                        .opacity(text.isEmpty ? 1 : 0)
+                }
                 getTextField()
-                if canBeHidden {
+                if type == .password {
                     Button(action: {
                         isHiding.toggle()
                     }, label: {
@@ -32,8 +38,8 @@ struct LoginTextField: View {
                     })
                 }
             }
-                .padding()
-                .overlay(RoundedRectangle(cornerRadius: 10).stroke(isEditing ? Color.purple : Color.secondary, lineWidth: 1))
+            .padding()
+            .overlay(RoundedRectangle(cornerRadius: 10).stroke(isEditing ? Color.purple : Color.secondary, lineWidth: 1))
         }
         .onTapGesture {
             userInteracted()
@@ -44,7 +50,7 @@ struct LoginTextField: View {
     }
     
     @ViewBuilder func getTextField() -> some View {
-        if isHiding && canBeHidden {
+        if isHiding && type == .password {
             SecureField(title, text: $text, onCommit: {isEditing = false})
         } else {
             TextField(title, text: $text, onCommit: {isEditing = false})
@@ -60,6 +66,12 @@ struct LoginTextField: View {
 
 struct LoginTextField_Previews: PreviewProvider {
     static var previews: some View {
-        LoginTextField(title: "Email", text: .constant("Email"))
+        StylizedTextField(title: "Email", text: .constant("Email"))
     }
+}
+
+enum textFieldType {
+    case normal
+    case password
+    case search
 }

@@ -9,40 +9,29 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var isTyping = false
+    @State private var searchString = ""
+    var searchStringCondition: Binding<Bool> {
+        Binding<Bool> (
+            get: {
+                !self.searchString.isEmpty
+            },
+            set: { _ in
+                
+            }
+        )
+    }
     var body: some View {
-        Text("OI")
-//        VStack {
-//            VStack {
-//                Spacer()
-//                    .frame(height: 68)
-//                ZStack {
-//                    if isTyping {
-//                        HStack {
-//                            Image(systemName: "arrow.left")
-//                                .font(Font.title3.weight(.bold))
-//                                .foregroundColor(.purple)
-//                            Spacer()
-//                        }
-//                    }
-//                    HStack {
-//                        Text(isTyping ? "Pesquise" : "Pesquise por uma empresa")
-//                            .font(isTyping ? .title : Font.system(size: 40, weight: .bold))
-//                            .bold()
-//                            .foregroundColor(Color("FadedBlack"))
-//                        if !isTyping {
-//                            Spacer()
-//                        }
-//                    }
-//                }
-//            }
-//            .padding(.horizontal, 24)
-//            .onTapGesture {
-//                withAnimation {
-//                    isTyping.toggle()
-//                }
-//            }
-//            Spacer()
-//        }.edgesIgnoringSafeArea(.top)
+        VStack(spacing: 35) {
+            CustomNavigationBar(condition: searchStringCondition, backButtonAction: {
+                UIApplication.shared.dismissKeyboard()
+                searchString = ""
+            })
+                .padding(.horizontal)
+            StylizedTextField(title: "Buscar...", text: $searchString, type: .search)
+                .padding(.horizontal)
+            Spacer()
+        }
+        .edgesIgnoringSafeArea(.top)
     }
 }
 

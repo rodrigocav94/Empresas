@@ -17,7 +17,7 @@ struct LoginButton: View {
                 .foregroundColor(Color.white)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical)
-                .background(disableCondition ? Color.secondary : Color("FadedBlack"))
+                .background(disableCondition ? Color.secondary : Color.fadedBlack)
                 .clipShape(Capsule())
         })
     }
