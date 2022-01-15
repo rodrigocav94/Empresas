@@ -20,6 +20,7 @@ struct LoginButton: View {
                 .background(disableCondition ? Color.secondary : Color.fadedBlack)
                 .clipShape(Capsule())
         })
+            .disabled(disableCondition)
     }
 }
 

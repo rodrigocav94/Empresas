@@ -10,4 +10,7 @@ import Foundation
 class SessionDetails: ObservableObject {
     @Published var currentScreen: Screen = .login
     @Published var loginDetails = LoginDetails()
+    var loginIsPopulated: Bool {
+        self.loginDetails.accessToken != "" || self.loginDetails.client != "" || self.loginDetails.uid != ""
+    }
 }

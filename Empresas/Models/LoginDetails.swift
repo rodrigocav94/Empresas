@@ -1,5 +1,5 @@
 //
-//  LoginSession.swift
+//  LoginDetails.swift
 //  Empresas
 //
 //  Created by Rodrigo Cavalcanti on 14/01/22.

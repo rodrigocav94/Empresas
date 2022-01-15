@@ -9,20 +9,11 @@ import Foundation
 import SwiftUI
 
 class EmailAndPassworViewwModel: ObservableObject {
-    @Published var email = ""
-    @Published var password = ""
+    @Published var email = "testeapple@ioasys.com.br"
+    @Published var password = "12341234"
+    @Published var failedAttempt = false
     
-    var loginButtonDisableCondition: Binding<Bool> {
-        Binding<Bool> (
-            get: {
-                self.email.isEmpty || self.password.isEmpty
-            },
-            set: { _ in
-                
-            }
-        )
-    }
-    func loginButtonAction() {
+    func loginButtonAction(sessionDetails: SessionDetails, failAttemptTracker: Binding<Bool>) {
         let loginInfo = LoginInfo(email: email, password: password)
         
         guard let encoded = try? JSONEncoder().encode(loginInfo) else {
@@ -39,14 +30,23 @@ class EmailAndPassworViewwModel: ObservableObject {
         request.httpBody = encoded
         
         URLSession.shared.dataTask(with: request) { data, response, error in
-            if let unwrappedURL = response as? HTTPURLResponse {
-                if let statusCode = unwrappedURL.allHeaderFields.first(where: {$0.key as! String == "Status"})?.value as? String {
-                    print(statusCode)
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 200 {
+                    
+                    DispatchQueue.main.async {
+                        sessionDetails.loginDetails.client = httpResponse.getKeyValue(for: "client")
+                        sessionDetails.loginDetails.accessToken = httpResponse.getKeyValue(for: "access-token")
+                        sessionDetails.loginDetails.uid = httpResponse.getKeyValue(for: "uid")
+                        if sessionDetails.loginIsPopulated {
+                            sessionDetails.currentScreen = .home
+                        }
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        failAttemptTracker.wrappedValue = true
+                    }
                 }
-//                for i in ["access-token", "client", "uid"] {
-//                    print(unwrappedURL.allHeaderFields.first(where: {$0.key == AnyHashable(i)})?.value as! String)
-//                }
-                print(response)
             }
         }.resume()
     }

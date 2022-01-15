@@ -8,30 +8,35 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State private var isTyping = false
-    @State private var searchString = ""
+    @ObservedObject var homeViewModel = HomeViewModel()
+    @EnvironmentObject var sessionDetails: SessionDetails
+    
     var searchStringCondition: Binding<Bool> {
         Binding<Bool> (
             get: {
-                !self.searchString.isEmpty
+                !self.homeViewModel.searchString.isEmpty
             },
             set: { _ in
                 
             }
         )
     }
+    
     var body: some View {
         VStack(spacing: 35) {
             CustomNavigationBar(condition: searchStringCondition, backButtonAction: {
                 UIApplication.shared.dismissKeyboard()
-                searchString = ""
+                homeViewModel.searchString = ""
             })
                 .padding(.horizontal)
-            StylizedTextField(title: "Buscar...", text: $searchString, type: .search)
+            StylizedTextField(title: "Buscar...", text: $homeViewModel.searchString, type: .search)
                 .padding(.horizontal)
             Spacer()
         }
         .edgesIgnoringSafeArea(.top)
+        .onAppear(perform: {
+            homeViewModel.debounceSearchableStringChanges(accessToken: sessionDetails.loginDetails.accessToken, client: sessionDetails.loginDetails.client, uid: sessionDetails.loginDetails.uid)
+        })
     }
 }
 

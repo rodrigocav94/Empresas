@@ -20,6 +20,7 @@ struct EmpresasApp: App {
             case .home:
                 HomeView()
                     .environment(\.colorScheme, .light)
+                    .environmentObject(sessionDetails)
                     .transition(.slide)
                     .animation(.default)
             }

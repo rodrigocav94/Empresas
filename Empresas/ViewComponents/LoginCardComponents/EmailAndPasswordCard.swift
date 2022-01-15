@@ -11,16 +11,37 @@ struct EmailAndPasswordCard: View {
     @ObservedObject var emailAndPassworViewwModel = EmailAndPassworViewwModel()
     @EnvironmentObject var sessionDetails: SessionDetails
     
+    var loginButtonDisableCondition: Binding<Bool> {
+        Binding<Bool> (
+            get: {
+                emailAndPassworViewwModel.email.isEmpty || emailAndPassworViewwModel.password.isEmpty
+            },
+            set: { _ in
+                
+            }
+        )
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 30) {
-            Group {
+            VStack(alignment: .leading) {
                 Text("Digite seus dados para continuar.")
                     .bold()
-                StylizedTextField(title: "Email", text: $emailAndPassworViewwModel.email)
-                StylizedTextField(title: "Senha", text: $emailAndPassworViewwModel.password, type: .password)
+                    .foregroundColor(.fadedBlack)
+                if emailAndPassworViewwModel.failedAttempt {
+                    Text("Endereço de email ou senha inválida, tente novamente.")
+                        .font(.footnote)
+                        .foregroundColor(.red)
+                }
             }
-            .foregroundColor(.black)
-            LoginButton(disableCondition: emailAndPassworViewwModel.loginButtonDisableCondition, action: { sessionDetails.currentScreen = .home})
+            Group {
+                StylizedTextField(title: "Email", text: $emailAndPassworViewwModel.email, didFail: $emailAndPassworViewwModel.failedAttempt)
+                StylizedTextField(title: "Senha", text: $emailAndPassworViewwModel.password, type: .password, didFail: $emailAndPassworViewwModel.failedAttempt)
+            }
+            .foregroundColor(emailAndPassworViewwModel.failedAttempt ? .red : .fadedBlack)
+            
+            LoginButton(disableCondition: loginButtonDisableCondition, action: {
+                emailAndPassworViewwModel.loginButtonAction(sessionDetails: sessionDetails, failAttemptTracker: $emailAndPassworViewwModel.failedAttempt)})
                 .padding(.bottom, 40)
         }
         .padding()

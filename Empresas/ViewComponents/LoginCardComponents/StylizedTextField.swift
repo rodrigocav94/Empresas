@@ -14,6 +14,7 @@ struct StylizedTextField: View {
     var type: textFieldType = .normal
     @State private var isHiding = true
     @State private var isEditing = false
+    var didFail: Binding<Bool>? = nil
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -39,7 +40,7 @@ struct StylizedTextField: View {
                 }
             }
             .padding()
-            .overlay(RoundedRectangle(cornerRadius: 10).stroke(isEditing ? Color.purple : Color.secondary, lineWidth: 1))
+            .overlay(RoundedRectangle(cornerRadius: 10).stroke((didFail?.wrappedValue ?? false) ? .red : (isEditing ? Color.purple : Color.secondary), lineWidth: 1))
         }
         .onTapGesture {
             userInteracted()
@@ -54,9 +55,12 @@ struct StylizedTextField: View {
             SecureField(title, text: $text, onCommit: {isEditing = false})
         } else {
             TextField(title, text: $text, onCommit: {isEditing = false})
+                .keyboardType(type == .search ? .default : .emailAddress)
+                .autocapitalization(type == .search ? .words : .none)
         }
     }
     func userInteracted() {
+        didFail?.wrappedValue = false
         isEditing = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             self.isEditing = false
