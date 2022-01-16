@@ -9,7 +9,6 @@ import SwiftUI
 
 struct HomeView: View {
     @ObservedObject var homeViewModel = HomeViewModel()
-    @EnvironmentObject var sessionDetails: SessionDetails
     
     var searchStringCondition: Binding<Bool> {
         Binding<Bool> (
@@ -21,48 +20,66 @@ struct HomeView: View {
             }
         )
     }
-    let columns = [
-        GridItem(.adaptive(minimum: 152))
-    ]
+    
+    var isDetailScreen: Binding<Bool> {
+        Binding<Bool> (
+            get: {
+                homeViewModel.screen == .detail
+            },
+            set: { _ in
+                
+            }
+        )
+    }
+    
+    var detailHeadingBinding: Binding<String> {
+        Binding<String> (
+            get: {
+                homeViewModel.selectedEnterprise.enterpriseName
+            },
+            set: { _ in
+                
+            }
+        )
+    }
+    
+    var detailSubheadingBinding: Binding<String> {
+        Binding<String> (
+            get: {
+                homeViewModel.selectedEnterprise.enterpriseType.enterpriseTypeName
+            },
+            set: { _ in
+                
+            }
+        )
+    }
     
     var body: some View {
-        VStack(spacing: 35) {
-            Group {
-                CustomNavigationBar(condition: searchStringCondition, backButtonAction: {
+        if homeViewModel.screen == .loading {
+            LoadingScreenView(homeViewModel: homeViewModel)
+        } else {
+            VStack(spacing: 0) {
+                CustomNavigationBar(condition: searchStringCondition, isDetail: isDetailScreen, detailHeading: detailHeadingBinding, detailSubheading: detailSubheadingBinding, backButtonAction: {
                     UIApplication.shared.dismissKeyboard()
-                    homeViewModel.searchString = ""
-                })
-                StylizedTextField(title: "Buscar...", text: $homeViewModel.searchString, type: .search)
-            }
-            .padding(.horizontal)
-            
-            List {
-                if !homeViewModel.searchString.isEmpty {
-                    if !homeViewModel.searchResults.enterprises.isEmpty {
-                        LazyVGrid(columns: columns, spacing: 20) {
-                            ForEach(homeViewModel.searchResults.enterprises) { enterprise in
-                                EnterpriseGridCard(photoUrl: enterprise.photoURL, name: enterprise.enterpriseName)
-                                    .onTapGesture {
-                                        
-                                    }
-                            }
-                        }
-                        .listRowSeparator(.hidden)
+                    if homeViewModel.screen == .search {
+                        homeViewModel.searchString = ""
+                    } else {
+                        homeViewModel.screen = .search
                     }
+                })
+                if homeViewModel.screen == .search {
+                    SearchScreenView(homeViewModel: homeViewModel)
+                        .overlay(VStack {
+                            LinearGradient(colors: [.white, .white.opacity(0)], startPoint: .top, endPoint: .bottom)
+                                .frame(height: 10)
+                            Spacer()
+                        })
+                } else {
+                    ResultDetailView(homeViewModel: homeViewModel)
                 }
             }
-            .listStyle(.plain)
-            .frame(maxWidth: .infinity)
-            .overlay(VStack {
-                LinearGradient(colors: [.white, .white.opacity(0)], startPoint: .top, endPoint: .bottom)
-                    .frame(height: 10)
-                Spacer()
-            })
+            .edgesIgnoringSafeArea(.top)
         }
-        .edgesIgnoringSafeArea(.top)
-        .onAppear(perform: {
-            homeViewModel.debounceSearchableStringChanges(accessToken: sessionDetails.loginDetails.accessToken, client: sessionDetails.loginDetails.client, uid: sessionDetails.loginDetails.uid)
-        })
     }
 }
 

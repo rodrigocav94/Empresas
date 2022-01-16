@@ -9,16 +9,25 @@ import Foundation
 import Combine
 
 class HomeViewModel: ObservableObject {
-    @Published var searchString = ""
+    @Published var searchString = "" {
+        didSet {
+            if receivedNoResults {
+                receivedNoResults = false
+            }
+        }
+    }
     private var disposeBag = Set<AnyCancellable>()
     @Published var searchResults = Enterprises(enterprises: [])
+    @Published var screen: HomeViewScreen = .loading
+    @Published var selectedEnterprise = Enterprise(id: 1994, enterpriseName: "McDonalds", photo: "/uploads/enterprise/photo/18/240.jpeg", description: "Restaurante", enterpriseType: EnterpriseType(enterpriseTypeName: "Restaurante"))
+    @Published var receivedNoResults = false
     
     func debounceSearchableStringChanges(accessToken: String, client: String, uid: String) {
         $searchString
             .debounce(for: 0.7, scheduler: RunLoop.main)
             .sink { newSearchValue in
                 if newSearchValue != "" {
-                    guard let url = URL(string: "https://empresas.ioasys.com.br/api/v1/enterprises?name=\(newSearchValue)") else {
+                    guard let url = URL(string: "https://empresas.ioasys.com.br/api/v1/enterprises?name=\(newSearchValue.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? newSearchValue)") else {
                         print("Invalid URL")
                         return
                     }
@@ -36,7 +45,11 @@ class HomeViewModel: ObservableObject {
                             do {
                                 let unwrappedSearchResults = try decoder.decode(Enterprises.self, from: data)
                                 DispatchQueue.main.async { [unowned self] in
-                                    searchResults = unwrappedSearchResults
+                                    if unwrappedSearchResults.enterprises.isEmpty {
+                                        receivedNoResults = true
+                                    } else {
+                                        searchResults = unwrappedSearchResults
+                                    }
                                 }
                                 return
                             } catch {
