@@ -22,8 +22,8 @@
 		9F3A62492793ABEE00BA702F /* HomeViewEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3A62482793ABEE00BA702F /* HomeViewEnum.swift */; };
 		9F3A624B2793B14600BA702F /* ProgressCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3A624A2793B14600BA702F /* ProgressCircle.swift */; };
 		9F5F835F2794601100A4AD11 /* LoadingScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5F835E2794601100A4AD11 /* LoadingScreenView.swift */; };
-		9F5F83612794635800A4AD11 /* SearchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5F83602794635800A4AD11 /* SearchScreenView.swift */; };
 		9F5F83632794683D00A4AD11 /* ResultDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5F83622794683D00A4AD11 /* ResultDetailView.swift */; };
+		9F7C7D3A27948354000B043F /* SearchScreenView.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7C7D3927948354000B043F /* SearchScreenView.swift.swift */; };
 		9FB2BC932791D05D00125959 /* EmpresasApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BC922791D05D00125959 /* EmpresasApp.swift */; };
 		9FB2BC972791D07B00125959 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FB2BC962791D07B00125959 /* Assets.xcassets */; };
 		9FB2BC9A2791D07B00125959 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FB2BC992791D07B00125959 /* Preview Assets.xcassets */; };
@@ -75,8 +75,8 @@
 		9F3A62482793ABEE00BA702F /* HomeViewEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewEnum.swift; sourceTree = "<group>"; };
 		9F3A624A2793B14600BA702F /* ProgressCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressCircle.swift; sourceTree = "<group>"; };
 		9F5F835E2794601100A4AD11 /* LoadingScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreenView.swift; sourceTree = "<group>"; };
-		9F5F83602794635800A4AD11 /* SearchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreenView.swift; sourceTree = "<group>"; };
 		9F5F83622794683D00A4AD11 /* ResultDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailView.swift; sourceTree = "<group>"; };
+		9F7C7D3927948354000B043F /* SearchScreenView.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreenView.swift.swift; sourceTree = "<group>"; };
 		9FB2BC8F2791D05D00125959 /* Empresas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Empresas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FB2BC922791D05D00125959 /* EmpresasApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmpresasApp.swift; sourceTree = "<group>"; };
 		9FB2BC962791D07B00125959 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -199,10 +199,10 @@
 			isa = PBXGroup;
 			children = (
 				9F3A622A2792F3BC00BA702F /* LoginScreenView.swift */,
-				9F5F83602794635800A4AD11 /* SearchScreenView.swift */,
 				9F5F83622794683D00A4AD11 /* ResultDetailView.swift */,
 				9F5F835E2794601100A4AD11 /* LoadingScreenView.swift */,
 				9F3A62312792FD1700BA702F /* HomeView.swift */,
+				9F7C7D3927948354000B043F /* SearchScreenView.swift.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -397,11 +397,11 @@
 				9FB2BCCA2792235E00125959 /* EmailAndPasswordCard.swift in Sources */,
 				9F3A622B2792F3BC00BA702F /* LoginScreenView.swift in Sources */,
 				9FB2BCCF279230C800125959 /* LoginScreenViewModel.swift in Sources */,
-				9F5F83612794635800A4AD11 /* SearchScreenView.swift in Sources */,
 				9F3A624727939CCA00BA702F /* EnterpriseGridCard.swift in Sources */,
 				9F3A623D2793372C00BA702F /* HTTPURLResponseExtensions.swift in Sources */,
 				9F3A6245279394CD00BA702F /* EnterpriseExtensions.swift in Sources */,
 				9FB2BCD12792326700125959 /* EmailAndPasswordViewModel.swift in Sources */,
+				9F7C7D3A27948354000B043F /* SearchScreenView.swift.swift in Sources */,
 				9F3A623627931E5F00BA702F /* CustomNavigationBar.swift in Sources */,
 				9F3A623927932EBF00BA702F /* UIApplicationExtensions.swift in Sources */,
 				9FB2BCCC2792244000125959 /* StylizedTextField.swift in Sources */,
@@ -632,7 +632,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 52DJP63H9U;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -657,7 +657,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 52DJP63H9U;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
