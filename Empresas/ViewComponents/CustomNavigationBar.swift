@@ -26,15 +26,11 @@ struct CustomNavigationBar: View {
                         Spacer()
                     }
                 }
-                HStack {
-                    Text(condition ? "Pesquise" : "Pesquise por uma empresa")
-                        .font(condition ? .title : Font.system(size: 40, weight: .bold))
-                        .bold()
-                        .foregroundColor(.fadedBlack)
-                    if !condition {
-                        Spacer()
-                    }
-                }
+                Text(condition ? "Pesquise" : "Pesquise por uma empresa")
+                    .font(condition ? .title : Font.system(size: 40, weight: .bold))
+                    .bold()
+                    .foregroundColor(.fadedBlack)
+                    .frame(maxWidth: .infinity, alignment: !condition ? .leading : .center)
             }
             .padding(.top, 35)
         }

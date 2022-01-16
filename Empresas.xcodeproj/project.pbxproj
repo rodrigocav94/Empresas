@@ -17,6 +17,8 @@
 		9F3A623D2793372C00BA702F /* HTTPURLResponseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3A623C2793372C00BA702F /* HTTPURLResponseExtensions.swift */; };
 		9F3A6241279366E000BA702F /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3A6240279366E000BA702F /* HomeViewModel.swift */; };
 		9F3A62432793690D00BA702F /* Enterprises.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3A62422793690D00BA702F /* Enterprises.swift */; };
+		9F3A6245279394CD00BA702F /* EnterpriseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3A6244279394CD00BA702F /* EnterpriseExtensions.swift */; };
+		9F3A624727939CCA00BA702F /* EnterpriseGridCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3A624627939CCA00BA702F /* EnterpriseGridCard.swift */; };
 		9FB2BC932791D05D00125959 /* EmpresasApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BC922791D05D00125959 /* EmpresasApp.swift */; };
 		9FB2BC972791D07B00125959 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FB2BC962791D07B00125959 /* Assets.xcassets */; };
 		9FB2BC9A2791D07B00125959 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FB2BC992791D07B00125959 /* Preview Assets.xcassets */; };
@@ -63,6 +65,8 @@
 		9F3A623C2793372C00BA702F /* HTTPURLResponseExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPURLResponseExtensions.swift; sourceTree = "<group>"; };
 		9F3A6240279366E000BA702F /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		9F3A62422793690D00BA702F /* Enterprises.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enterprises.swift; sourceTree = "<group>"; };
+		9F3A6244279394CD00BA702F /* EnterpriseExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterpriseExtensions.swift; sourceTree = "<group>"; };
+		9F3A624627939CCA00BA702F /* EnterpriseGridCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterpriseGridCard.swift; sourceTree = "<group>"; };
 		9FB2BC8F2791D05D00125959 /* Empresas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Empresas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FB2BC922791D05D00125959 /* EmpresasApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmpresasApp.swift; sourceTree = "<group>"; };
 		9FB2BC962791D07B00125959 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -115,6 +119,7 @@
 				9F3A623827932EBF00BA702F /* UIApplicationExtensions.swift */,
 				9F3A623A2793302F00BA702F /* ColorExtensions.swift */,
 				9F3A623C2793372C00BA702F /* HTTPURLResponseExtensions.swift */,
+				9F3A6244279394CD00BA702F /* EnterpriseExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -194,6 +199,7 @@
 			children = (
 				9FB2BCC82792229800125959 /* LoginCardComponents */,
 				9FB2BCC42792213400125959 /* SplashScreenBackground.swift */,
+				9F3A624627939CCA00BA702F /* EnterpriseGridCard.swift */,
 				9F3A623527931E5F00BA702F /* CustomNavigationBar.swift */,
 			);
 			path = ViewComponents;
@@ -373,7 +379,9 @@
 				9FB2BCCA2792235E00125959 /* EmailAndPasswordCard.swift in Sources */,
 				9F3A622B2792F3BC00BA702F /* LoginScreenView.swift in Sources */,
 				9FB2BCCF279230C800125959 /* LoginScreenViewModel.swift in Sources */,
+				9F3A624727939CCA00BA702F /* EnterpriseGridCard.swift in Sources */,
 				9F3A623D2793372C00BA702F /* HTTPURLResponseExtensions.swift in Sources */,
+				9F3A6245279394CD00BA702F /* EnterpriseExtensions.swift in Sources */,
 				9FB2BCD12792326700125959 /* EmailAndPasswordViewModel.swift in Sources */,
 				9F3A623627931E5F00BA702F /* CustomNavigationBar.swift in Sources */,
 				9F3A623927932EBF00BA702F /* UIApplicationExtensions.swift in Sources */,
@@ -551,7 +559,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -581,7 +589,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -12,7 +12,7 @@ struct Enterprises: Codable {
 }
 
 // MARK: - Enterprise
-struct Enterprise: Codable {
+struct Enterprise: Codable, Identifiable {
     let id: Int
     let enterpriseName, photo, description: String
     let enterpriseType: EnterpriseType
