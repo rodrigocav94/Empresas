@@ -25,48 +25,53 @@ class HomeViewModel: ObservableObject {
     func debounceSearchableStringChanges(accessToken: String, client: String, uid: String) {
         $searchString
             .debounce(for: 0.7, scheduler: RunLoop.main)
-            .sink { newSearchValue in
-                if newSearchValue != "" {
-                    guard let url = URL(string: "https://empresas.ioasys.com.br/api/v1/enterprises?name=\(newSearchValue.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? newSearchValue)") else {
-                        print("Invalid URL")
-                        return
-                    }
-                    var request = URLRequest(url: url)
-                    request.setValue(accessToken, forHTTPHeaderField: "access-token")
-                    request.setValue(client, forHTTPHeaderField: "client")
-                    request.setValue(uid, forHTTPHeaderField: "uid")
-                    
-                    URLSession.shared.dataTask(with: request) {data, response, error in
-                        if let data = data {
-                            let decoder = JSONDecoder()
-                            decoder.dateDecodingStrategy = .iso8601
-                            decoder.keyDecodingStrategy = .convertFromSnakeCase
-
-                            do {
-                                let unwrappedSearchResults = try decoder.decode(Enterprises.self, from: data)
-                                DispatchQueue.main.async { [unowned self] in
-                                    if unwrappedSearchResults.enterprises.isEmpty {
-                                        receivedNoResults = true
-                                    } else {
-                                        searchResults = unwrappedSearchResults
-                                    }
-                                }
-                                return
-                            } catch {
-                                print("Decoding Failed: \(error)")
-                            }
-                        } else {
-                            print("Error: \(error!)")
-                        }
-                    }.resume()
-                } else {
-                    DispatchQueue.main.async { [unowned self] in
-                        searchResults = Enterprises(enterprises: [])
-                    }
-                }
+            .sink {
+                self.searchOnApi(word: $0, accessToken: accessToken, client: client, uid: uid)
             }
             .store(in: &disposeBag)
-        
+    }
+    
+    func searchOnApi(word: String, accessToken: String, client: String, uid: String, testCondition: @escaping () -> () = {}) {
+        if word != "" {
+            guard let url = URL(string: "https://empresas.ioasys.com.br/api/v1/enterprises?name=\(word.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? word)") else {
+                print("Invalid URL")
+                return
+            }
+            var request = URLRequest(url: url)
+            request.setValue(accessToken, forHTTPHeaderField: "access-token")
+            request.setValue(client, forHTTPHeaderField: "client")
+            request.setValue(uid, forHTTPHeaderField: "uid")
+            
+            URLSession.shared.dataTask(with: request) {data, response, error in
+                if let data = data {
+                    let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .iso8601
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+
+                    do {
+                        let unwrappedSearchResults = try decoder.decode(Enterprises.self, from: data)
+                        DispatchQueue.main.async { [unowned self] in
+                            if unwrappedSearchResults.enterprises.isEmpty {
+                                receivedNoResults = true
+                            } else {
+                                searchResults = unwrappedSearchResults
+                            }
+                            testCondition()
+                        }
+                        return
+                    } catch {
+                        print("Decoding Failed: \(error)")
+                    }
+                } else {
+                    print("Error: \(error!)")
+                }
+            }.resume()
+        } else {
+            DispatchQueue.main.async { [unowned self] in
+                searchResults = Enterprises(enterprises: [])
+            }
+        }
+
     }
     deinit {
         disposeBag.removeAll()
