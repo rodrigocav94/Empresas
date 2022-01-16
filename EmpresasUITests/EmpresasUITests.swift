@@ -8,35 +8,44 @@
 import XCTest
 
 class EmpresasUITests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
+    let app = XCUIApplication()
+    
+    func testSearchScreenAccess() throws {
         app.launch()
+        sleep(3)
+        app.textFields["Email"].tap()
+        app.textFields["Email"].typeText("testeapple@ioasys.com.br")
 
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+
+        app.secureTextFields["Senha"].tap()
+        app.secureTextFields["Senha"].typeText("12341234")
+        
+        app.buttons["ENTRAR"].tap()
+        XCTAssertEqual(app.staticTexts["Pesquise por uma empresa"].waitForExistence(timeout: 5), true, "Não foi possível acessar a tela de buscas")
+        app.terminate()
     }
+    
+    func testSearchDetailAccess() throws {
+        app.launch()
+        sleep(3)
+        app.textFields["Email"].tap()
+        app.textFields["Email"].typeText("testeapple@ioasys.com.br")
 
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
+        
+
+        app.secureTextFields["Senha"].tap()
+        app.secureTextFields["Senha"].typeText("12341234")
+        
+        app.buttons["ENTRAR"].tap()
+        
+        sleep(3)
+        let buscarTextField = app.textFields["Buscar..."]
+        buscarTextField.tap()
+        buscarTextField.typeText("Investment")
+        sleep(3)
+        app.staticTexts["Investment Searcher"].tap()
+        XCTAssertEqual(app.staticTexts["Fintech"].waitForExistence(timeout: 5), true, "Não foi possível acessar o detalhe da tela de buscas")
+        app.terminate()
     }
 }

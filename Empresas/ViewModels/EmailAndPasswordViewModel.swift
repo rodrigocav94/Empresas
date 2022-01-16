@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 
 class EmailAndPassworViewwModel: ObservableObject {
-    @Published var email = "testeapple@ioasys.com.br"
-    @Published var password = "12341234"
+    @Published var email = ""
+    @Published var password = ""
     @Published var failedAttempt = false
     
     func loginButtonAction(sessionDetails: SessionDetails, failAttemptTracker: Binding<Bool>, testCondition: @escaping () -> () = {}) {
