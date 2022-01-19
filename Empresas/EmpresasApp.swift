@@ -15,11 +15,9 @@ struct EmpresasApp: App {
             switch sessionDetails.currentScreen {
             case .login:
                 LoginScreenView()
-                    .environment(\.colorScheme, .light)
                     .environmentObject(sessionDetails)
             case .home:
                 HomeView()
-                    .environment(\.colorScheme, .light)
                     .environmentObject(sessionDetails)
                     .transition(.slide)
                     .animation(.default)
