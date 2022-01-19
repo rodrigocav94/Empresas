@@ -11,17 +11,6 @@ struct EmailAndPasswordCard: View {
     @ObservedObject var emailAndPassworViewwModel = EmailAndPassworViewwModel()
     @EnvironmentObject var sessionDetails: SessionDetails
     
-    var loginButtonDisableCondition: Binding<Bool> {
-        Binding<Bool> (
-            get: {
-                emailAndPassworViewwModel.email.isEmpty || emailAndPassworViewwModel.password.isEmpty
-            },
-            set: { _ in
-                
-            }
-        )
-    }
-    
     var body: some View {
         VStack(alignment: .leading, spacing: 30) {
             VStack(alignment: .leading) {
@@ -40,7 +29,7 @@ struct EmailAndPasswordCard: View {
             }
             .foregroundColor(emailAndPassworViewwModel.failedAttempt ? .red : .fadedBlack)
             
-            LoginButton(disableCondition: loginButtonDisableCondition, action: {
+            LoginButton(disableCondition: .constant(emailAndPassworViewwModel.email.isEmpty || emailAndPassworViewwModel.password.isEmpty), action: {
                 emailAndPassworViewwModel.loginButtonAction(sessionDetails: sessionDetails, failAttemptTracker: $emailAndPassworViewwModel.failedAttempt)})
                 .padding(.bottom, 40)
         }

@@ -10,56 +10,12 @@ import SwiftUI
 struct HomeView: View {
     @ObservedObject var homeViewModel = HomeViewModel()
     
-    var searchStringCondition: Binding<Bool> {
-        Binding<Bool> (
-            get: {
-                !self.homeViewModel.searchString.isEmpty
-            },
-            set: { _ in
-                
-            }
-        )
-    }
-    
-    var isDetailScreen: Binding<Bool> {
-        Binding<Bool> (
-            get: {
-                homeViewModel.screen == .detail
-            },
-            set: { _ in
-                
-            }
-        )
-    }
-    
-    var detailHeadingBinding: Binding<String> {
-        Binding<String> (
-            get: {
-                homeViewModel.selectedEnterprise.enterpriseName
-            },
-            set: { _ in
-                
-            }
-        )
-    }
-    
-    var detailSubheadingBinding: Binding<String> {
-        Binding<String> (
-            get: {
-                homeViewModel.selectedEnterprise.enterpriseType.enterpriseTypeName
-            },
-            set: { _ in
-                
-            }
-        )
-    }
-    
     var body: some View {
         if homeViewModel.screen == .loading {
             LoadingScreenView(homeViewModel: homeViewModel)
         } else {
             VStack(spacing: 0) {
-                CustomNavigationBar(condition: searchStringCondition, isDetail: isDetailScreen, detailHeading: detailHeadingBinding, detailSubheading: detailSubheadingBinding, backButtonAction: {
+                CustomNavigationBar(condition: .constant(!self.homeViewModel.searchString.isEmpty), isDetail: .constant(homeViewModel.screen == .detail), detailHeading: .constant(homeViewModel.selectedEnterprise.enterpriseName), detailSubheading: .constant(homeViewModel.selectedEnterprise.enterpriseType.enterpriseTypeName), backButtonAction: {
                     UIApplication.shared.dismissKeyboard()
                     if homeViewModel.screen == .search {
                         homeViewModel.searchString = ""
